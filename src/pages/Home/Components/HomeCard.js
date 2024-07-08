@@ -9,7 +9,7 @@ export default function HomeCard(props){
         <div className="col mb-5">
             <div className="card h-100 px-3 pt-2">
                 <div className="form-check form-check-inline">
-                    <input className="form-check-input ml-5 delete-checkbox" 
+                    <input className="form-check-input ml-5 .delete-checkbox" 
                     type="checkbox" 
                     id={props.SKU} 
                     value={props.SKU} 
