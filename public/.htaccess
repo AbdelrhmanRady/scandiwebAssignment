@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /
+
+# Handle requests to the frontend React app
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
+
+# Proxy PHP requests to the backend
+RewriteRule ^api/(.*)$ /php-backend/api/$1 [L]
