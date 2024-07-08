@@ -34,11 +34,11 @@ export default function AddListing(){
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        if(name === "Length" || name === "Width" || name === "Height"){
+        if(name === "length" || name === "width" || name === "height"){
 
-            if(name === "Length"){length = value;}
-            if(name === "Width"){width = value;}
-            if(name === "Height"){height = value;}
+            if(name === "length"){length = value;}
+            if(name === "width"){width = value;}
+            if(name === "height"){height = value;}
 
             setInputs(values => ({...values,"Dimensions": height+"x"+width+"x"+length}));
         }
@@ -127,7 +127,7 @@ export default function AddListing(){
                 {selected === "Furniture" && (
                     <div>
                     <label htmlFor="Height">Height (CM):</label>
-                    <input onChange={handleChange} type="number" min="1" max="15000" id="height" name="Height" required/>
+                    <input onChange={handleChange} type="number" min="1" max="15000" id="height" name="height" required/>
                     <label htmlFor="Width">Width (CM):</label>
                     <input onChange={handleChange} type="number" min="1" max="15000" id="width" name="width" required/>
                     <label htmlFor="Length">Length (CM):</label>
