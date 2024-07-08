@@ -115,13 +115,13 @@ export default function AddListing(){
                 {selected === "Book" && (
                     <div>
                     <label htmlFor="weight">Weight (KG):</label>
-                    <input onChange={handleChange} type="number" min="1" max="15000" id="size" name="Weight" required/>
+                    <input onChange={handleChange} type="number" min="1" max="15000" id="weight" name="weight" required/>
                     </div>
                 )}
                 {selected === "DVD_disc" && (
                     <div>
                     <label htmlFor="size">Size (MB):</label>
-                    <input onChange={handleChange} type="number" min="1" max="15000" id="weight" name="Size" required/>
+                    <input onChange={handleChange} type="number" min="1" max="15000" id="size" name="size" required/>
                     </div>
                 )}
                 {selected === "Furniture" && (
@@ -129,9 +129,9 @@ export default function AddListing(){
                     <label htmlFor="Height">Height (CM):</label>
                     <input onChange={handleChange} type="number" min="1" max="15000" id="height" name="Height" required/>
                     <label htmlFor="Width">Width (CM):</label>
-                    <input onChange={handleChange} type="number" min="1" max="15000" id="Width" name="width" required/>
+                    <input onChange={handleChange} type="number" min="1" max="15000" id="width" name="width" required/>
                     <label htmlFor="Length">Length (CM):</label>
-                    <input onChange={handleChange} type="number" min="1" max="15000" id="Length" name="length" required/>
+                    <input onChange={handleChange} type="number" min="1" max="15000" id="length" name="length" required/>
                     </div>
                 )}
                 
