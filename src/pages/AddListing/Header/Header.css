@@ -87,3 +87,9 @@
 .Nav-link {
     padding:10px;
 }
+.center-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center; /* Center text horizontally */
+}

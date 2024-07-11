@@ -1,10 +1,9 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddListing.css"
-import ImageUpload from "../../Components/ImageUpload"
 import axios from 'axios';
-import swal from 'sweetalert2'
 import { useNavigate } from "react-router-dom";
 import Header  from "./Header/Header";
+
 var length = 0
 var height = 0
 var width = 0
@@ -13,6 +12,7 @@ export default function AddListing(){
     const [selected,setSelected] = useState("");
     const [inputs,setInputs] = useState({});
     const [notification,setNotification] = useState('');
+    const [visibleInputs,setVisibleInputs] = useState({});
 
     axios.defaults.withCredentials = true;
     const navigate = useNavigate();
@@ -21,7 +21,15 @@ export default function AddListing(){
 
     },[]);
 
+
     const handleSelect = (event) => {
+        var numOfElements = Object.keys(inputs).length
+        if(inputs["Type"]!=null && numOfElements>4){
+            let variableKey = Object.keys(inputs).find(key => !['SKU', 'Product_Name', 'Product_Price','Type'].includes(key));
+            const { [variableKey]: _, ...newState } = inputs;
+            setInputs(newState);
+            setVisibleInputs(newState)
+        }
         const name = event.target.name;
         const id = event.target.id;
 
@@ -32,25 +40,47 @@ export default function AddListing(){
         
     }
     const handleChange = (event) => {
+        console.log(inputs)
         const name = event.target.name;
-        const value = event.target.value;
-        if(name === "length" || name === "width" || name === "height"){
+        var value = event.target.value;
 
-            if(name === "length"){length = value;}
-            if(name === "width"){width = value;}
-            if(name === "height"){height = value;}
+        if (!['SKU', 'Product_Name', 'Type'].includes(name)) {
+            var pattern = /[^0-9]/g
+            if(pattern.test(value)){
+                return
+            }
 
-            setInputs(values => ({...values,"Dimensions": height+"x"+width+"x"+length}));
+            setVisibleInputs(values => ({...values,[name]: value}));
+            if(name === "length" || name === "width" || name === "height"){
+                
+                if(name === "length"){length = parseFloat(value);}
+                if(name === "width"){width = parseFloat(value);}
+                if(name === "height"){height = parseFloat(value);}
+                
+                setInputs(values => ({...values,"Dimensions": height+"x"+width+"x"+length}));
+            }
+            else{
+                setInputs(values => ({ ...values, [name]: parseFloat(value) }));
+            }
         }
         else{
-
-            setInputs(values => ({...values,[name]: value}));
-        }
+            setInputs(values => ({ ...values, [name]: value}));
+            setVisibleInputs(values => ({...values,[name]: value}));
+        } 
+        
+        
+        
     }
 
     const handleSubmit = () =>{
-        let variableKey = Object.keys(inputs).find(key => !['SKU', 'Product_Name', 'Product_Price','Type'].includes(key));
+        var form = document.getElementById('product_form');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return 
+        }
 
+        let variableKey = Object.keys(inputs).find(key => !['SKU', 'Product_Name', 'Product_Price','Type'].includes(key));
+        
         // Create a new object with keys in the desired order
         let orderedObject = {
             SKU: inputs.SKU,
@@ -59,8 +89,6 @@ export default function AddListing(){
             Type:inputs.Type,
             [variableKey]: inputs[variableKey]
         };
-
-        // Display the ordered object
 
         axios.post('http://localhost/upload',orderedObject, {
             withCredentials: false,  // Disable sending credentials
@@ -82,11 +110,11 @@ export default function AddListing(){
     }
     return(
         <div className="AddListing">
-            <Header
-            handleSubmit = {handleSubmit}
-            />
-            <form className="AddListing-form" id="product_form">
+            
+            
+            <Header handleSubmit = {handleSubmit}/>
 
+            <form className="AddListing-form" id="product_form">
                 <h1>Add Product</h1>
                 
                 <fieldset>
@@ -94,13 +122,13 @@ export default function AddListing(){
                 <legend>Product info</legend>
                 {notification && <div className="notification" style={notificationStyle}>{notification}</div>}
                 <label htmlFor="SKU">SKU:</label>
-                <input onChange={handleChange} type="text" id="sku" name="SKU" required/>
+                <input onChange={handleChange} value={visibleInputs.SKU || ""} type="text" id="sku" name="SKU" required/>
                 
                 <label htmlFor="name">Name:</label>
-                <input onChange={handleChange} type="text" id="name" name="Product_Name" required/>
+                <input onChange={handleChange} value={visibleInputs.Product_Name || ""} type="text" id="name" name="Product_Name" required/>
                 
                 <label htmlFor="price">Price:</label>
-                <input onChange={handleChange} type="number" min="1" max="15000" id="price" name="Product_Price" required/>
+                <input onChange={handleChange} value={visibleInputs.Product_Price || ""} type="text" min="1" max="15000" id="price" name="Product_Price" required/>
                 
                 
 
@@ -115,23 +143,23 @@ export default function AddListing(){
                 {selected === "Book" && (
                     <div>
                     <label htmlFor="weight">Weight (KG):</label>
-                    <input onChange={handleChange} type="number" min="1" max="15000" id="weight" name="weight" required/>
+                    <input onChange={handleChange} value={visibleInputs.weight || ""} type="text" min="1" max="15000" id="weight" name="weight" required/>
                     </div>
                 )}
                 {selected === "DVD_disc" && (
                     <div>
                     <label htmlFor="size">Size (MB):</label>
-                    <input onChange={handleChange} type="number" min="1" max="15000" id="size" name="size" required/>
+                    <input onChange={handleChange} value={visibleInputs.size || ""} type="text" min="1" max="15000" id="size" name="size" required/>
                     </div>
                 )}
                 {selected === "Furniture" && (
                     <div>
-                    <label htmlFor="Height">Height (CM):</label>
-                    <input onChange={handleChange} type="number" min="1" max="15000" id="height" name="height" required/>
-                    <label htmlFor="Width">Width (CM):</label>
-                    <input onChange={handleChange} type="number" min="1" max="15000" id="width" name="width" required/>
-                    <label htmlFor="Length">Length (CM):</label>
-                    <input onChange={handleChange} type="number" min="1" max="15000" id="length" name="length" required/>
+                    <label htmlFor="height">Height (CM):</label>
+                    <input onChange={handleChange} value={visibleInputs.height || ""} type="text" min="1" max="15000" id="height" name="height" required/>
+                    <label htmlFor="width">Width (CM):</label>
+                    <input onChange={handleChange} value={visibleInputs.width || ""} type="text" min="1" max="15000" id="width" name="width" required/>
+                    <label htmlFor="length">Length (CM):</label>
+                    <input onChange={handleChange} value={visibleInputs.length || ""} type="text" min="1" max="15000" id="length" name="length" required/>
                     </div>
                 )}
                 
@@ -143,4 +171,3 @@ export default function AddListing(){
         </div>
     );
 }
-

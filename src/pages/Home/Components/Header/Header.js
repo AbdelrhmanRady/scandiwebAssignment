@@ -18,11 +18,7 @@ export default function Header(props){
     const HandleClickAdd = () => {
         navigate("/add-product");
     }
-    const HandleClickDelete = () => {
-        axios.post("http://localhost:80/Delete",props.checkedItemstoDelete,{
-            withCredentials : false,
-        })
-    }
+
 
 
 
@@ -45,9 +41,8 @@ export default function Header(props){
                             navbarScroll>
                             <Form  className=" d-flex justify-content-center">
                     
-                            <button type="" className="Header-Button btn mr-auto text fs-2" onClick={HandleClickAdd}>ADD</button>
+                            <button type="submit" className="Header-Button btn mr-auto text fs-2" onClick={HandleClickAdd}>ADD</button>
                             <button type="button" className="Header-Button btn mr-auto fs-2 " onClick={props.handleDeleteFunc}>MASS DELETE</button>    
-                            {/* <button type="submit" className="Header-Button btn">Search</button>   */}
                             </Form>
                         </Nav>
 

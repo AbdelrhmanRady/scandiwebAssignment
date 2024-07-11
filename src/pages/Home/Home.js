@@ -74,10 +74,16 @@ const handleDelete = () =>{
             <Header 
             handleDeleteFunc = {handleDelete}
             />
+            {data.length === 0 && 
+                <div className="center-text" style={{ height: '60vh' }}>
+                    <h1>No Products Available</h1>
+                </div>
+            }
             <div className="home-products py-5" style={page_style} >
+                
                 <div className="container px-4 px-lg-5 mt-5"  style={page_style}>
                     <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-2 row-cols-xl-3 justify-content-start " style={page_style} >
-                        
+                    
                     {
                         
                                   data.map((dataItem,index)=>{
