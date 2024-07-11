@@ -90,7 +90,7 @@ export default function AddListing(){
             [variableKey]: inputs[variableKey]
         };
 
-        axios.post('http://localhost/upload',orderedObject, {
+        axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject, {
             withCredentials: false,  // Disable sending credentials
         })
         .then(function(response) {

@@ -18,7 +18,7 @@ export default function Home(){
     }, []);
 
   const fetchData = () =>{
-    axios.get('http://localhost:80/getproducts', {
+    axios.get('https://abdelrhmanscandiweb.000webhostapp.com/getproducts', {
         withCredentials: false,  // Disable sending credentials
     })
       .then(
@@ -59,7 +59,7 @@ const handleCheckbox = (id) =>{
 }
 
 const handleDelete = () =>{
-    axios.post("http://localhost:80/Delete",checkedItems,{
+    axios.post("https://abdelrhmanscandiweb.000webhostapp.com/Delete",checkedItems,{
         withCredentials : false,
     }).then( ()=>{
         fetchData()
