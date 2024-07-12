@@ -19,10 +19,10 @@ export default function Home(){
 
   const fetchData = () =>{
     axios.get('https://abdelrhmanscandiweb.000webhostapp.com/getproducts', {
-        // headers: {
-        //   'Content-Type': 'application/json'
-        // },
-        // withCredentials: true
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
       })
       .then(
         (response) => { 
