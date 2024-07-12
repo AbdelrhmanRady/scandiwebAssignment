@@ -92,11 +92,13 @@ export default function AddListing(){
 
 
 
-  
 
         axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject, {
-            withCredentials: true,  // Disable sending credentials
-        })
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            withCredentials: true
+          })
         .then(function(response) {
             if(response.data.includes("Duplicate entry")){
                 setNotification('Duplicate SKU entry found. Please try again.');
