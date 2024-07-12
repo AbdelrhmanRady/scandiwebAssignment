@@ -94,10 +94,10 @@ export default function AddListing(){
 
 
         axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject, {
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            withCredentials: true
+            // headers: {
+            //   'Content-Type': 'application/json'
+            // },
+            // withCredentials: true
           })
         .then(function(response) {
             if(response.data.includes("Duplicate entry")){
