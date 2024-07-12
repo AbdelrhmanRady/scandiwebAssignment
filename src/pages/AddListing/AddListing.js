@@ -3,8 +3,6 @@ import "./AddListing.css"
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Header  from "./Header/Header";
-import http from 'http';
-import https from 'https';
 
 var length = 0
 var height = 0
@@ -101,8 +99,6 @@ export default function AddListing(){
             headers: {
                 'Content-Type': 'application/json',
             },
-            httpAgent: httpAgent,
-            httpsAgent: httpsAgent,
         });
 
         instance.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject, {
