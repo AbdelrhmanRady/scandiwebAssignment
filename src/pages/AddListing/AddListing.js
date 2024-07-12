@@ -95,7 +95,7 @@ export default function AddListing(){
   
 
         axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject, {
-            withCredentials: true,  
+            withCredentials: true,  // Disable sending credentials
         })
         .then(function(response) {
             if(response.data.includes("Duplicate entry")){
@@ -104,31 +104,7 @@ export default function AddListing(){
             else{
                     navigate("/");
             }
-        }).catch(error => {
-            // Handle error, including retries
-            console.error('Error:', error);
-        
-            // Retry logic
-            if (error.response) {
-              // The request was made and the server responded with a status code
-              console.error('Response data:', error.response.data);
-              console.error('Response status:', error.response.status);
-            } else if (error.request) {
-              // The request was made but no response was received
-              console.error('No response received:', error.request);
-            } else {
-              // Something else happened while setting up the request
-              console.error('Error setting up request:', error.message);
-            }
-        
-            // Retry the request
-            if (error.config && error.config.retryAttempt < 3) {
-              error.config.retryAttempt = error.config.retryAttempt ? error.config.retryAttempt + 1 : 1;
-              return axios(error.config);
-            } else {
-              console.error('Max retries exceeded or error cannot be retried.');
-            }
-          });
+        })
 
     }
     const notificationStyle = {
