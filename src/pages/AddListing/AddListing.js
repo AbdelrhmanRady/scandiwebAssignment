@@ -72,7 +72,7 @@ export default function AddListing(){
         
     }
 
-    const handleSubmit = () =>{
+    const handleSubmit = async () =>{
         var form = document.getElementById('product_form');
         if (!form.checkValidity()) {
             form.reportValidity();
@@ -89,18 +89,24 @@ export default function AddListing(){
             Type:inputs.Type,
             [variableKey]: inputs[variableKey]
         };
-
-        axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject, {
-            withCredentials: false,  // Disable sending credentials
-        })
-        .then(function(response) {
-            if(response.data.includes("Duplicate entry")){
-                setNotification('Duplicate SKU entry found. Please try again.');
-            }
-            else{
-                    navigate("/");
-            }
-        })
+        try {
+            const response = await axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject);
+            console.log('Response:', response.data);
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle error
+        }
+        // axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject, {
+        //     withCredentials: false,  // Disable sending credentials
+        // })
+        // .then(function(response) {
+        //     if(response.data.includes("Duplicate entry")){
+        //         setNotification('Duplicate SKU entry found. Please try again.');
+        //     }
+        //     else{
+        //             navigate("/");
+        //     }
+        // })
 
     }
     const notificationStyle = {
