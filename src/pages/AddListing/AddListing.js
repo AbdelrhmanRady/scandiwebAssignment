@@ -40,8 +40,10 @@ export default function AddListing(){
         
     }
     const handleChange = (event) => {
+        console.log(inputs)
         const name = event.target.name;
         var value = event.target.value;
+
         if (!['SKU', 'Product_Name', 'Type'].includes(name)) {
             var pattern = /[^0-9]/g
             if(pattern.test(value)){
@@ -70,7 +72,7 @@ export default function AddListing(){
         
     }
 
-    const handleSubmit = async () =>{
+    const handleSubmit = () =>{
         var form = document.getElementById('product_form');
         if (!form.checkValidity()) {
             form.reportValidity();
@@ -88,27 +90,21 @@ export default function AddListing(){
             [variableKey]: inputs[variableKey]
         };
 
-
-
-
-
-        axios.post('https://abdelrhmanscandiweb.000webhostapp.com/wubba',orderedObject, {
+        axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload', orderedObject, {
+            withCredentials : false,
             headers: {
-              'Content-Type': 'application/json'
-            },
-            withCredentials: true
+              'Content-Type': 'application/x-www-form-urlencoded'
+            }
           })
-        .then(function(response) {
+          .then(function(response) {
             if(response.data.includes("Duplicate entry")){
                 setNotification('Duplicate SKU entry found. Please try again.');
             }
             else{
                     navigate("/");
             }
-        }).catch(function(error) {
-            console.error("AxiosError: Network Error", error);
-            // Handle the error, show a message, retry, etc.
-        });
+          })
+
 
     }
     const notificationStyle = {

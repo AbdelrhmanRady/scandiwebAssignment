@@ -4,6 +4,11 @@ import axios from 'axios';
 import HomeCard from "./Components/HomeCard";
 import Header from "./Components/Header/Header"
 
+const data = new URLSearchParams({
+    param1: 'value1',
+    param2: 'value2'
+  });
+  
 export default function Home(){
 
 
@@ -19,11 +24,8 @@ export default function Home(){
 
   const fetchData = () =>{
     axios.get('https://abdelrhmanscandiweb.000webhostapp.com/getproducts', {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        withCredentials: true
-      })
+        withCredentials: false,  // Disable sending credentials
+    })
       .then(
         (response) => { 
             console.log(response.data)
@@ -62,11 +64,16 @@ const handleCheckbox = (id) =>{
 }
 
 const handleDelete = () =>{
-    axios.post("https://abdelrhmanscandiweb.000webhostapp.com/Delete",checkedItems,{
+    axios.post('https://abdelrhmanscandiweb.000webhostapp.com/Delete', checkedItems, {
         withCredentials : false,
-    }).then( ()=>{
-        fetchData()
-    } )
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      })
+      .then( ()=>{
+            fetchData()
+        } )
+
 }
 
 
