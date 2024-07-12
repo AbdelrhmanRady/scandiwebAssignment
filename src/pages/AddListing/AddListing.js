@@ -90,8 +90,7 @@ export default function AddListing(){
         };
 
 
-        const httpAgent = new http.Agent({ keepAlive: true });
-        const httpsAgent = new https.Agent({ keepAlive: true });
+
 
         const instance = axios.create({
             baseURL: 'https://abdelrhmanscandiweb.000webhostapp.com', // Adjust base URL as needed
