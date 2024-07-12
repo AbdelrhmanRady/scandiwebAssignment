@@ -42,7 +42,6 @@ export default function AddListing(){
     const handleChange = (event) => {
         const name = event.target.name;
         var value = event.target.value;
-        console.log("et8ayar 3lshany")
         if (!['SKU', 'Product_Name', 'Type'].includes(name)) {
             var pattern = /[^0-9]/g
             if(pattern.test(value)){
