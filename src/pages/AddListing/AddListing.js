@@ -106,7 +106,10 @@ export default function AddListing(){
             else{
                     navigate("/");
             }
-        })
+        }).catch(function(error) {
+            console.error("AxiosError: Network Error", error);
+            // Handle the error, show a message, retry, etc.
+        });
 
     }
     const notificationStyle = {
