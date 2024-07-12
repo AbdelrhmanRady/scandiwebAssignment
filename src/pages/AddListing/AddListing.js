@@ -93,7 +93,7 @@ export default function AddListing(){
 
 
 
-        axios.post('https://scandiweb-assignment-fj3phvn4f-abdelrhmanradys-projects.vercel.app/upload',orderedObject, {
+        axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject, {
             headers: {
               'Content-Type': 'application/json'
             },
