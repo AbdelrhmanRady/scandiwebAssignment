@@ -93,7 +93,7 @@ export default function AddListing(){
 
 
 
-        axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject, {
+        axios.post('https://abdelrhmanscandiweb.000webhostapp.com/wubba',orderedObject, {
             headers: {
               'Content-Type': 'application/json'
             },
