@@ -95,7 +95,7 @@ export default function AddListing(){
   
 
         axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject, {
-            withCredentials: false,  // Disable sending credentials
+            withCredentials: true,  
         })
         .then(function(response) {
             if(response.data.includes("Duplicate entry")){
