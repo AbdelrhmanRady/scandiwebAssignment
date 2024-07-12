@@ -19,8 +19,11 @@ export default function Home(){
 
   const fetchData = () =>{
     axios.get('https://abdelrhmanscandiweb.000webhostapp.com/getproducts', {
-        withCredentials: true,  // Disable sending credentials
-    })
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true
+      })
       .then(
         (response) => { 
             console.log(response.data)
