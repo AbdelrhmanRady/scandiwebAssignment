@@ -3,6 +3,8 @@ import "./AddListing.css"
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Header  from "./Header/Header";
+import http from 'http';
+import https from 'https';
 
 var length = 0
 var height = 0
@@ -40,7 +42,6 @@ export default function AddListing(){
         
     }
     const handleChange = (event) => {
-        console.log(inputs)
         const name = event.target.name;
         var value = event.target.value;
 
@@ -89,24 +90,32 @@ export default function AddListing(){
             Type:inputs.Type,
             [variableKey]: inputs[variableKey]
         };
-        try {
-            const response = await axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject);
-            console.log('Response:', response.data);
-        } catch (error) {
-            console.error('Error:', error);
-            // Handle error
-        }
-        // axios.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject, {
-        //     withCredentials: false,  // Disable sending credentials
-        // })
-        // .then(function(response) {
-        //     if(response.data.includes("Duplicate entry")){
-        //         setNotification('Duplicate SKU entry found. Please try again.');
-        //     }
-        //     else{
-        //             navigate("/");
-        //     }
-        // })
+
+
+        const httpAgent = new http.Agent({ keepAlive: true });
+        const httpsAgent = new https.Agent({ keepAlive: true });
+
+        const instance = axios.create({
+            baseURL: 'https://abdelrhmanscandiweb.000webhostapp.com', // Adjust base URL as needed
+            timeout: 10000, // Adjust timeout if necessary
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            httpAgent: httpAgent,
+            httpsAgent: httpsAgent,
+        });
+
+        instance.post('https://abdelrhmanscandiweb.000webhostapp.com/upload',orderedObject, {
+            withCredentials: false,  // Disable sending credentials
+        })
+        .then(function(response) {
+            if(response.data.includes("Duplicate entry")){
+                setNotification('Duplicate SKU entry found. Please try again.');
+            }
+            else{
+                    navigate("/");
+            }
+        })
 
     }
     const notificationStyle = {
